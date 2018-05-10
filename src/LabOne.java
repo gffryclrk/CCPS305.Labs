@@ -153,6 +153,7 @@ public class LabOne {
 		};
 		String q5_s = twoDeeArrayToString(multiplyMatrix(q5_1, q5_2));
 		System.out.println("Q5: Array Multiplication\n" + q5_s);
+		
 
 	}
 

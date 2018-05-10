@@ -1,3 +1,5 @@
 *.class
 *.ctxt
 /bin
+/src/ArrayDemo1.java
+
