@@ -50,10 +50,24 @@ public class LinkedListStudent{
 		size+=1;
 
 	}
+
+	// Add at specified index
+	public void add(int stdnum, String sname, double sgpa, int index){
+		if(index == 0){
+			first = new LNode(stdnum, sname, sgpa, first);
+		}else{
+			if(index >= size) index = size-1; 
+			LNode current = nodeAt(index - 1);
+			current.next = new LNode(stdnum, sname, sgpa, current.next);
+		}
+		size+=1;
+	}
+
 	// remove from end of list
 	public void remove(){
-		if(first == null || first.next == null) {
+		/*if(first == null || first.next == null) {
 			first = null;
+			size = 0;
 			return;
 		}; //null & 1 node lists
 
@@ -62,8 +76,34 @@ public class LinkedListStudent{
 			current = current.next;
 		}
 		current.next = null;
-		size-=1;
+		size-=1; */
+		remove(size-1);
 
+	}
+	// Remove from specified index
+	public void remove(int index) {
+		if(first == null || first.next == null) {
+			first = null;
+			size = 0;
+			return;
+		} // null & 1 node lists
+		
+		if(index==0) first = first.next;
+		else{
+			if(index >= size) index = size - 1;
+			LNode current = nodeAt(index - 1);
+			current.next = current.next.next;
+		}
+		size-=1;
+	}
+
+	// helper method to return specific node 
+	private LNode nodeAt(int index){
+		LNode current = first;
+		for(int i = 0; i < index; i++){
+			current = current.next;
+		}
+		return current;
 	}
 
 	public String toString(){
@@ -89,13 +129,22 @@ public class LinkedListStudent{
 		
 		LinkedListStudent lss = new LinkedListStudent();
 		lss.remove(); //remove from empty list
+		System.out.println(lss.size() + lss.toString());
 		lss.add(1, "Harry", 3.5);
 		lss.remove(); //remove from list with one
+		System.out.println(lss.size() + lss.toString());
 		lss.add(2, "George", 4.0);
 		lss.add(3, "Tommy", 2.33);
-		System.out.println(lss.toString());
+		System.out.println(lss.size() + lss.toString());
 		lss.remove(); //remove from list with two
-		System.out.println(lss);
+		System.out.println(lss.size() + lss.toString());
+		lss.add(4, "Hank", 3.0, 0);
+		lss.add(5, "Stophie", 2.33, 10);
+		System.out.println(lss.size() + lss.toString());
+		lss.remove();
+		System.out.println(lss.size() + lss.toString());
+		lss.remove(2);
+		System.out.println(lss.size() + lss.toString());
 		
 		
 		// Keyboard input example
