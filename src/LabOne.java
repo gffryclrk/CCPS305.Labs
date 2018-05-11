@@ -153,6 +153,33 @@ public class LabOne {
 		};
 		String q5_s = twoDeeArrayToString(multiplyMatrix(q5_1, q5_2));
 		System.out.println("Q5: Array Multiplication\n" + q5_s);
+
+		// Q6
+		ArrayList<Integer> al = new ArrayList<>();
+		al.add(12345);
+		al.add(67890);
+		System.out.println("Create new array list, al, and add two integers:" + al);
+		ArrayList<Integer> alc = (ArrayList<Integer>) al.clone();
+		alc.addAll(al);
+		System.out.println("alc: clone & add all from al" + alc);
+//		al.size();
+		System.out.println("alc size: " + alc.size());
+		System.out.println("alc contains all al before adding: " + alc.containsAll(al));
+		al.add(23456);
+		System.out.println("alc contains all al after adding: " + alc.containsAll(al));
+		alc.clear();
+		System.out.println("alc size (after clear): " + alc.size());
+		Object[] aa = al.toArray();
+		System.out.println("Before swap: " + al);
+		Collections.swap(al, 0, 1);
+		System.out.println("Before shuffle: " + al);
+		Collections.shuffle(al);
+		System.out.println("After shuffle, before reverse: " + al);
+		Collections.reverse(al);
+		System.out.println("After reverse: " + al);
+
+
+
 		
 
 	}
