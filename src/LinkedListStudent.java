@@ -65,18 +65,6 @@ public class LinkedListStudent{
 
 	// remove from end of list
 	public void remove(){
-		/*if(first == null || first.next == null) {
-			first = null;
-			size = 0;
-			return;
-		}; //null & 1 node lists
-
-		LNode current = first;
-		while(current.next.next != null){
-			current = current.next;
-		}
-		current.next = null;
-		size-=1; */
 		remove(size-1);
 
 	}
