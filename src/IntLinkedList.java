@@ -47,6 +47,7 @@ public class IntLinkedList{
 		if(index == 0){
 			front = new ListNode(value, front);
 		}else{
+			if(index > count) index = count; 
 			ListNode current = nodeAt(index - 1);
 			current.next = new ListNode(value, current.next);
 		}
@@ -143,7 +144,7 @@ public class IntLinkedList{
 		System.out.println("Size: " + ill.size());
 		ill.add(17);
 		ill.add(42);
-		ill.add(88);
+		ill.add(2, 88);
 		System.out.println(ill.toString());
 		ill.addSorted(6);
 		System.out.println(ill.toString());
