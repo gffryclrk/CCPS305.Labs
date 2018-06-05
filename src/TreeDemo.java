@@ -79,6 +79,44 @@ public class TreeDemo {
 		System.out.println();
 		bst.printSideways();
 
+		System.out.print("\n\n\n\n");
+		System.out.println("AVL TREES!!!");
+
+		LinkedAVLTree<Integer> avl = new LinkedAVLTree<>();
+		int[] numbers = {20, 45, 90, 70, 10, 40, 35, 30, 99, 60, 50, 80};
+//		int[] numbers = {20, 45, 90}; 
+		for(int i = 0; i<3; i+=1){
+			avl.add(numbers[i]);
+			System.out.println(avl.balanceFactor());
+		}
+//		Integer i = 3;
+//		avl.add(i);
+		System.out.println("AVL Tree size: " + avl.size());
+		System.out.println(avl);
+		
+		avl.printSideways();
+		System.out.println("Balanace factor:" + avl.balanceFactor());
+		System.out.println("Height:" + avl.height());
+		
+		System.out.print("\n\nLeft Rotation");
+//		avl.leftRotation();
+		
+		avl.printSideways();
+		System.out.println("Balanace factor:" + avl.balanceFactor());
+		System.out.println("Height:" + avl.height());
+		
+		// The tree will remain balanced until 30 is added
+		// Add 5 more numbers
+		
+		for(int i = 3; i < 8; i+=1) {
+			avl.add(numbers[i]);
+		}
+		
+//		avl.add(numbers[3]);
+		
+		avl.printSideways();
+		System.out.println("Balanace factor:" + avl.balanceFactor());
+		System.out.println("Height:" + avl.height());
 	}
 
 

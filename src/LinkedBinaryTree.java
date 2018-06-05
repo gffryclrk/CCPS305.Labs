@@ -1,5 +1,5 @@
 /*
-* This implimentation is based heavily on the LinkedBinaryTree Class
+* This implementation is based heavily on the LinkedBinaryTree Class
 * found in Java Foundations 2nd Ed, Chapter 16 by Lewis, DePasquale & Chase
 * However, I have made some changes. Notably I removed anything that
 * was unique to the book's package: they tend to implement their own
@@ -76,6 +76,13 @@ public class LinkedBinaryTree<T> {
 		return result;
 	}
 
+	public int height(){
+		if(root == null) return 0;
+		int left = (root.left == null) ? 0 : this.getLeft().height();
+		int right = (root.right == null) ? 0 : this.getRight().height();
+		return Math.max(left, right) + 1;
+	}
+
 	
 	/*
 	* printSideways is from Reges & Stepp: Building Java Programs: A Back to Basics Approach
@@ -96,6 +103,23 @@ public class LinkedBinaryTree<T> {
 			System.out.println(root.getElement());
 			printSideways(root.getLeft(), level +1);
 		}
+	}
+
+	@Override
+	public String toString(){
+		/* toString method returns In Order traversal in string form */
+		
+		StringBuilder sb = new StringBuilder("");
+		Iterator<T> ti = this.inorder();
+		
+		sb.append("\ninorder:");
+		
+		while(ti.hasNext()){
+			sb.append(" " + ti.next());
+		}
+
+		return sb.toString();
+
 	}
 
 
