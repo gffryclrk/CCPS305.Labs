@@ -117,6 +117,16 @@ public class TreeDemo {
 		avl.printSideways();
 		System.out.println("Balanace factor:" + avl.balanceFactor());
 		System.out.println("Height:" + avl.height());
+		
+		// add the rest
+		
+		for(int i = 8; i < numbers.length; i+=1) {
+			avl.add(numbers[i]);
+		}
+		
+		avl.printSideways();
+		System.out.println("Balanace factor:" + avl.balanceFactor());
+		System.out.println("Height:" + avl.height());
 	}
 
 

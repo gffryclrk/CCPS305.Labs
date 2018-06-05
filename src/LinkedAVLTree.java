@@ -58,6 +58,14 @@ public class LinkedAVLTree<T extends Comparable<T>> extends LinkedBinarySearchTr
     return result;
   }
 
+  // public void setLeft(LinkedAVLTree<T> newLeft){
+	 //    root = newLeft.root;
+  // }
+  
+  public void setRoot(BTNode<T> root){
+    this.root = root;
+  }
+  
   public int balanceFactor(){
 	  return getLeft().height() - getRight().height();
 	  
@@ -101,13 +109,18 @@ public class LinkedAVLTree<T extends Comparable<T>> extends LinkedBinarySearchTr
   }
 
   private void checkBalance(){
-    if(this.balanceFactor() < -1) findLeft(this);
+    if(this.balanceFactor() < -1) findLeft(this, this.root);
     else if(this.balanceFactor() > 1) findRight(this, this.root);
   }
 
-  private void findLeft(LinkedAVLTree<T> tree) {
-	  if(tree.balanceFactor() < -1 && tree.getRight().balanceFactor() < -1) findLeft(tree.getRight());
-	  if(tree.balanceFactor() < -1 && tree.getRight().balanceFactor() >= -1) tree.leftRotation();	
+  private void findLeft(LinkedAVLTree<T> tree, BTNode<T> replace) {
+	  if(tree.balanceFactor() < -1 && tree.getRight().balanceFactor() < -1) findLeft(tree.getRight(), replace.right);
+//	  if(tree.balanceFactor() < -1 && tree.getRight().balanceFactor() > -1) findLeft(tree.getRight().getLeft(), replace.right);
+    // if(tree.balanceFactor() < -1 && tree.getRight().balanceFactor() >= -1) tree.leftRotation(); 
+	  if(tree.balanceFactor() < -1 && tree.getRight().balanceFactor() > tree.balanceFactor()) {
+	      this.setRoot(leftRotation(tree).root);
+
+    }
   }
 
   private void findRight(LinkedAVLTree<T> tree, BTNode<T> replace){
@@ -120,7 +133,13 @@ public class LinkedAVLTree<T extends Comparable<T>> extends LinkedBinarySearchTr
       // this.add(newTree.root);
 //      root.find(newTree.getRootElement()) = newTree.root;
     // this.root.left.right = rightRotation(tree).root;
-      replace.setRight(rightRotation(tree).root);
+      // replace.setRight(rightRotation(tree).root);
+      // tree.setRoot(rightRotation(tree).root);
+      
+      if(this.height() > 2) replace.setRight(rightRotation(tree).root);
+      else{
+        this.setRoot(rightRotation(tree).root);
+      }
 
     } 
   }
