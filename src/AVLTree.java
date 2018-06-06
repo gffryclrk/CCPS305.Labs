@@ -12,6 +12,7 @@ public class AVLTree<T extends Comparable<T>>{
 			this.data = data;
 			this.height = 0;
 		}
+
 		private AVLNode(T data, AVLNode<T> parent){
 			this.data = data;
 			this.parent = parent;
@@ -19,7 +20,6 @@ public class AVLTree<T extends Comparable<T>>{
 			if(parent != null) this.height = parent.height - 1;
 			else this.height = 0;
 		}
-
 
 		private T getData(){
 			return this.data;
@@ -50,6 +50,21 @@ public class AVLTree<T extends Comparable<T>>{
 			return n;
 		}
 
+		private AVLNode<T> find(T target){
+			AVLNode<T> result = null;
+
+			if(target.compareTo(data) == 0) result = this;
+			else{
+				if(target.compareTo(data) < 0){
+					if(left != null) result = left.find(target);
+				}else{
+					if(right != null) result = right.find(target);
+				}
+			}
+
+			return result;
+		}
+
 		@Override
 		public String toString(){
 			return data.toString();
@@ -72,6 +87,35 @@ public class AVLTree<T extends Comparable<T>>{
 
 	}
 	
+	private void delete(T data){
+		delete(root.find(data));
+	}
+
+	private void delete(AVLNode<T> n){
+		if(n.left == null && n.right == null){
+			if(n.parent == null) root = null;
+			else{
+				AVLNode<T> parent = n.parent;
+				if(parent.left == n) parent.left = null;
+				else parent.right = null;
+				rebalance(parent);
+			}
+			return;
+		}
+
+		if(n.left != null){
+			AVLNode<T> child = n.left;
+			while (child.right != null) child = child.right;
+			n.data = child.data;
+			delete(child);
+		}else{
+			AVLNode<T> child = n.right;
+			while(child.left != null) child = child.left;
+			n.data = child.data;
+			delete(child);
+		}
+	}
+
 	private int height(AVLNode<T> n){
 		if(n == null) return -1;
 		return n.height;
@@ -243,6 +287,34 @@ public class AVLTree<T extends Comparable<T>>{
 
 		avl.add(80);
 
+		avl.printInorder();
+		avl.printSideways();
+		
+		avl.delete(10);
+		avl.printInorder();
+		avl.printSideways();
+		
+		avl.delete(30);
+		avl.printInorder();
+		avl.printSideways();
+		
+		avl.delete(40);
+		avl.printInorder();
+		avl.printSideways();
+		
+		avl.delete(35);
+		avl.printInorder();
+		avl.printSideways();
+		
+		avl.delete(70);
+		avl.printInorder();
+		avl.printSideways();
+		
+		avl.delete(90);
+		avl.printInorder();
+		avl.printSideways();
+		
+		avl.delete(99);
 		avl.printInorder();
 		avl.printSideways();
 	}
