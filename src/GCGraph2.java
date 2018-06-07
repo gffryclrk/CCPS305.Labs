@@ -123,15 +123,22 @@ public class GCGraph2{
 		return vertexDegrees().values().stream().reduce(0, Integer::sum);
 	}
 
-	public boolean containsIsolatedVertex(){
+	public boolean containsLoop(){
 		for(int i=0; i<matrix.length; i+=1){
 			if(matrix[i][i] > 0) return true;
 		}
 		return false;
 	}
 
+	public boolean containsIsolatedVertex(){
+		return vertexDegrees().values().stream().anyMatch(v -> v == 0);
+	}
+
 	public boolean simpleGraph(){
-		return vertexDegrees().values().stream().anyMatch(v -> v > 1);
+		// for(int i=0; i<(matrix.length * matrix.length); i+=1){
+
+		// }
+		return !Arrays.stream(matrix).flatMapToInt(Arrays::stream).anyMatch(x -> x > 1);
 	}
 
 	@Override
@@ -151,18 +158,24 @@ public class GCGraph2{
 		System.out.println("Please enter a comma separated list of Edges in {vi, vk} form where vi & vk \n were both previously entered.\n");
 
 		// g.addEdges(kb.nextLine());
-		g.addEdges("{v1,v2},{v2,v3},{v3,v3},{v1,v2}");
+		g.addEdges("{v1,v2},{v2,v3},{v3,v1}");
 
 		// System.out.println(g);
 
 		System.out.println(g.matrixToString());
-
+		g.printEdgeFunction();
 		System.out.println("Vertex Degress:");
 		g.vertexDegrees().forEach((k, v) -> System.out.println(k + ": " + v));
 
 		System.out.println(g.vertexDegrees());
 
-		g.printEdgeFunction();
+		System.out.println("Graph degree: " + g.graphDegree());
+		System.out.println("Simple graph? :" + g.simpleGraph());
+		System.out.println("Contains isolated vertex?: " + g.containsIsolatedVertex());
+
+		g.addEdges("{v4,v4}");
+		System.out.println("Added {v4, v4}.\n" + "Simple graph? :" + g.simpleGraph());
+		System.out.println("Contains isolated vertex?: " + g.containsIsolatedVertex());
 
 		kb.close();
 	}
