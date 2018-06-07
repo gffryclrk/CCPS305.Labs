@@ -81,6 +81,20 @@ public class GCGraph2{
 		return sb.toString();
 	}
 
+	public void printEdgeFunction(){
+		int edgeCount = 1;
+		System.out.println("Edge Endpoint function");
+		for(int i=0; i<matrix.length; i+=1){
+			for(int j=0; j<(i+1); j+=1){
+				for(int k=0; k<matrix[i][j]; k+=1){
+					k+= (i == j) ? 1 : 0;					
+					System.out.println("e" + edgeCount + ": {" + names.get(j) + "," + names.get(i) + "}");
+					edgeCount+=1;
+				}
+			}
+		}
+	}
+
 	@Override
 	public String toString(){
 		return names.toString();
@@ -93,16 +107,18 @@ public class GCGraph2{
 		System.out.println("Please enter a comma separated list of Vertex names:");
 
 		// g.addNames(kb.nextLine());
-		g.addNames("v1,v2,v3");
+		g.addNames("v1,v2,v3,v4");
 		
 		System.out.println("Please enter a comma separated list of Edges in {vi, vk} form where vi & vk \n were both previously entered.\n");
 		
 		// g.addEdges(kb.nextLine());
-		g.addEdges("{v1,v2},{v2,v3},{v3,v3}");
+		g.addEdges("{v1,v2},{v2,v3},{v3,v3},{v1,v2}");
 		
 		// System.out.println(g);
 
 		System.out.println(g.matrixToString());
+		
+		g.printEdgeFunction();
 
 		kb.close();
 	}
