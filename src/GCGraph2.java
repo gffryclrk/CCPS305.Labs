@@ -5,6 +5,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 //import java.util.StringBuilder;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GCGraph2{
 	private List<String> names;
@@ -22,7 +24,7 @@ public class GCGraph2{
 	}
 	public void addNames(String n){
 		for(String name: n.split(",")){
-			names.add(name);	
+			names.add(name);
 //			addName
 		}
 		updateMatrix();
@@ -33,7 +35,7 @@ public class GCGraph2{
 		Pattern p = Pattern.compile(pattern);
 
 		Matcher matcher = p.matcher(n);
-		while(matcher.find()){	
+		while(matcher.find()){
 			addEdge(n.substring(matcher.start(), matcher.end()));
 		}
 	}
@@ -51,7 +53,7 @@ public class GCGraph2{
 	private void updateMatrix(){
 		int n = names.size();
 		int[][] newMatrix = new int[n][n];
-		
+
 		if(matrix != null){
 			for(int i=0; i<matrix.length; i+=1){
 				for(int j=0; j<matrix[i].length; j+=1){
@@ -69,7 +71,7 @@ public class GCGraph2{
 
 		// for(int[] row : matrix){
 		for(int i=0; i<names.size(); i+=1){
-			sb.append(" " + names.get(i)); 
+			sb.append(" " + names.get(i));
 		}
 		sb.append("\n");
 		for(int i = 0; i<matrix.length; i+=1){
@@ -87,12 +89,49 @@ public class GCGraph2{
 		for(int i=0; i<matrix.length; i+=1){
 			for(int j=0; j<(i+1); j+=1){
 				for(int k=0; k<matrix[i][j]; k+=1){
-					k+= (i == j) ? 1 : 0;					
+					k+= (i == j) ? 1 : 0;
 					System.out.println("e" + edgeCount + ": {" + names.get(j) + "," + names.get(i) + "}");
 					edgeCount+=1;
 				}
 			}
 		}
+	}
+
+	public Map<String, Integer> vertexDegrees(){
+		Map<String, Integer> m = new HashMap<>();
+
+		for (int i =0; i<matrix.length; i+=1) {
+			for (int j=0; j<matrix[i].length; j+=1) {
+				String n = names.get(i);
+				Integer v = m.get(n);
+				// v = (v == null) ? 0 : v + matrix[i][j];
+				if(v == null) v = 0;
+				v+= matrix[i][j];
+				m.put(n, v);
+				// if(v != null){
+				// 	m.set(m.get(i), m)
+				// }else{
+
+				}
+			}
+
+			return m;
+		}
+
+
+	public int graphDegree(){
+		return vertexDegrees().values().stream().reduce(0, Integer::sum);
+	}
+
+	public boolean containsIsolatedVertex(){
+		for(int i=0; i<matrix.length; i+=1){
+			if(matrix[i][i] > 0) return true;
+		}
+		return false;
+	}
+
+	public boolean simpleGraph(){
+		return vertexDegrees().values().stream().anyMatch(v -> v > 1);
 	}
 
 	@Override
@@ -108,16 +147,21 @@ public class GCGraph2{
 
 		// g.addNames(kb.nextLine());
 		g.addNames("v1,v2,v3,v4");
-		
+
 		System.out.println("Please enter a comma separated list of Edges in {vi, vk} form where vi & vk \n were both previously entered.\n");
-		
+
 		// g.addEdges(kb.nextLine());
 		g.addEdges("{v1,v2},{v2,v3},{v3,v3},{v1,v2}");
-		
+
 		// System.out.println(g);
 
 		System.out.println(g.matrixToString());
-		
+
+		System.out.println("Vertex Degress:");
+		g.vertexDegrees().forEach((k, v) -> System.out.println(k + ": " + v));
+
+		System.out.println(g.vertexDegrees());
+
 		g.printEdgeFunction();
 
 		kb.close();
