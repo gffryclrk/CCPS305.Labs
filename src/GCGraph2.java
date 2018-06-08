@@ -3,29 +3,21 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-//import java.util.StringBuilder;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class GCGraph2{
 	private List<String> names;
-	// private List<String> edges;
 	private int[][] matrix;
 
 	public GCGraph2(){
 		names = new ArrayList<>();
-		// edges = new ArrayList<>();
 	}
 
-	private void addName(String n){
-		names.add(n);
-		// updateMatrix();
-	}
 	public void addNames(String n){
 		for(String name: n.split(",")){
 			names.add(name);
-//			addName
 		}
 		updateMatrix();
 	}
@@ -69,7 +61,6 @@ public class GCGraph2{
 	public String matrixToString(){
 		StringBuilder sb = new StringBuilder(" ");
 
-		// for(int[] row : matrix){
 		for(int i=0; i<names.size(); i+=1){
 			sb.append(" " + names.get(i));
 		}
@@ -104,13 +95,9 @@ public class GCGraph2{
 			for (int j=0; j<matrix[i].length; j+=1) {
 				String n = names.get(i);
 				Integer v = m.get(n);
-				// v = (v == null) ? 0 : v + matrix[i][j];
 				if(v == null) v = 0;
 				v+= matrix[i][j];
 				m.put(n, v);
-				// if(v != null){
-				// 	m.set(m.get(i), m)
-				// }else{
 
 				}
 			}
@@ -135,9 +122,7 @@ public class GCGraph2{
 	}
 
 	public boolean simpleGraph(){
-		// for(int i=0; i<(matrix.length * matrix.length); i+=1){
 
-		// }
 		return !Arrays.stream(matrix).flatMapToInt(Arrays::stream).anyMatch(x -> x > 1);
 	}
 
@@ -152,12 +137,17 @@ public class GCGraph2{
 		Scanner kb = new Scanner(System.in);
 		System.out.println("Please enter a comma separated list of Vertex names:");
 
+		// Uncomment below to take input from std.in
+		// I used "v1,v2,v3,v4" for testing.
 		// g.addNames(kb.nextLine());
+
 		g.addNames("v1,v2,v3,v4");
 
 		System.out.println("Please enter a comma separated list of Edges in {vi, vk} form where vi & vk \n were both previously entered.\n");
 
+		// Edges can also be taken from std.in
 		// g.addEdges(kb.nextLine());
+		
 		g.addEdges("{v1,v2},{v2,v3},{v3,v1}");
 
 		// System.out.println(g);

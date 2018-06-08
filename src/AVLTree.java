@@ -1,3 +1,12 @@
+/*
+* AVL Tree implementation by Geoffrey Clark
+* Code heavily based on available Java implementation from Rosetta Code:
+* https://rosettacode.org/wiki/AVL_tree#More_elaborate_version_2
+* As well as implementation from Java Foundations, 2nd Edition, 
+* chapters 16 & 17: Trees & Binary Search Trees.
+* I also found the method for the sideways tree printout
+* in Building Java Programs: A back to Basics Approach (3rd Ed.)
+*/
 public class AVLTree<T extends Comparable<T>>{
 	
 	private AVLNode<T> root;
@@ -5,7 +14,6 @@ public class AVLTree<T extends Comparable<T>>{
 	private class AVLNode<T extends Comparable<T>> {
 		T data;
 		int height;
-		// int height, balance;
 		AVLNode<T> left, right, parent;
 
 		private AVLNode(T data){
@@ -16,7 +24,6 @@ public class AVLTree<T extends Comparable<T>>{
 		private AVLNode(T data, AVLNode<T> parent){
 			this.data = data;
 			this.parent = parent;
-			// this.height = parent.height + 1;
 			if(parent != null) this.height = parent.height - 1;
 			else this.height = 0;
 		}
@@ -31,16 +38,12 @@ public class AVLTree<T extends Comparable<T>>{
 			if(item.compareTo(data) < 0){
 				if(left == null){
 					n = new AVLNode<T>(item, this);
-					// left = new AVLNode<T>(item, this);
-					// rebalance(left);
 					left = n;
 					return n;
 				} 
 				else n = left.add(item);
 			}else{
 				if(right == null){
-					// right = new AVLNode<T>(item, this);
-					// rebalance(right);
 					n = new AVLNode<T>(item, this);
 					right = n;
 					return n;
@@ -131,39 +134,16 @@ public class AVLTree<T extends Comparable<T>>{
 		reheight(n);
 
 		if((height(n.left) - height(n.right)) == -2){
-			// if(n.left != null && height(n.left.left) >= height(n.left.right)){
-			// 	n = leftRotation(n);				
-			// }else{
-			// 	n.left = leftRotation(n.left);
-			// 	n = rightRotation(n);
-			// }
-			// if(n.left != null && height(n.left.left) < height(n.left.right)){
-
-			// if(n.right != null && height(n.right.right) < height(n.right.left)){
 			if(height(n.right.right) < height(n.right.left)){
 				n.right = rightRotation(n.right);
 				n = leftRotation(n);
-				// n.left = leftRotation(n.left);
-				// n = rightRotation(n);
-
 			}else{
 				n = leftRotation(n);
 			}
 		}else if((height(n.left) - height(n.right)) == 2){
-			// if(n.right != null && height(n.right.right) >= height(n.right.left)){
-			// 	n = rightRotation(n);
-			// }else{
-			// 	n.right = rightRotation(n.right);
-			// 	n = leftRotation(n);
-			// }
-			// if(n.right != null && height(n.right.right) < height(n.right.left)){
-
-			// if(n.left != null && height(n.left.left) < height(n.left.right)){
 			if(height(n.left.left) < height(n.left.right)){
 				n.left = leftRotation(n.left);
 				n = rightRotation(n);							
-				// n.right = rightRotation(n.right);
-				// n = leftRotation(n);
 			}else{				
 				n = rightRotation(n);
 			}
@@ -227,7 +207,9 @@ public class AVLTree<T extends Comparable<T>>{
 
 
 	public void printInorder() {
+		System.out.print("Inorder traversal: ");
 		printInorder(root);
+		System.out.println();
 	}
 
 	private void printInorder(AVLNode<T> n) {
@@ -254,6 +236,24 @@ public class AVLTree<T extends Comparable<T>>{
 		}
 	}
 
+	public int size(){
+		return size(root);
+	}
+	private int size(AVLNode<T> n){
+		if(n == null) return 0;
+		return size(n.left) + size(n.right) + 1;
+	}
+
+	public void print(){
+		/*
+		* This function should begin by printing a small header containing the size of the tree. 
+		* Then it should perform an InOrder  traversal of the tree, printing out each element as it traverses 
+		* the tree.
+		*/
+
+		System.out.println("Tree size: " + size());
+		printInorder();
+	}
 
 
 	public static void main(String[] args) {
@@ -317,6 +317,8 @@ public class AVLTree<T extends Comparable<T>>{
 		avl.delete(99);
 		avl.printInorder();
 		avl.printSideways();
+
+		avl.print();
 	}
 
 }

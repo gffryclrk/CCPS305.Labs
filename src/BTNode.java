@@ -1,5 +1,5 @@
-import java.util.Queue;
 // From Java Foundations 2nd Ed
+import java.util.Queue;
 
 public class BTNode<T> {
 	protected T element;
